@@ -365,6 +365,7 @@ Examples:
 Options:
   --city, -c        City name (required)
   --country, -C     Country name (required)
+  --coordinates, -l Coordinates as "LAT,LON", e.g., "38.123,-77.456"
   --theme, -t       Theme name (default: feature_based)
   --distance, -d    Map radius in meters (default: 29000)
   --list-themes     List all available themes
