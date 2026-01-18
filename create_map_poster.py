@@ -416,8 +416,9 @@ Examples:
         """
     )
     
-    parser.add_argument('--city', '-c', type=str, help='City name')
-    parser.add_argument('--country', '-C', type=str, help='Country name')
+    parser.add_argument('--city', '-c', type=str, help='City name.  Used only as a label with --coordinates.')
+    parser.add_argument('--country', '-C', type=str, help='Country name.  Used only as a label with --coordinates.')
+    parser.add_argument('--coordinates', '-l', type=str, help='Coordinates as "LAT,LON", e.g., "40.712776,-74.005974".')
     parser.add_argument('--theme', '-t', type=str, default='feature_based', help='Theme name (default: feature_based)')
     parser.add_argument('--distance', '-d', type=int, default=29000, help='Map radius in meters (default: 29000)')
     parser.add_argument('--list-themes', action='store_true', help='List all available themes')
@@ -435,6 +436,21 @@ Examples:
         os.sys.exit(0)
     
     # Validate required arguments
+
+    if args.coordinates:
+
+        coords = args.coordinates.split(',')
+        if len(coords) != 2:
+            print('Error: invalid coordinates.')
+            os.sys.exit(1)
+
+        try:
+            args.coordinates = tuple([ float(value) for value in coords ])
+        except ValueError as ex:
+            print(f'Error: Invalid coordinates: {ex}')
+            os.sys.exit(1)
+
+
     if not args.city or not args.country:
         print("Error: --city and --country are required.\n")
         print_examples()
@@ -456,9 +472,10 @@ Examples:
     
     # Get coordinates and generate poster
     try:
-        coords = get_coordinates(args.city, args.country)
-        output_file = generate_output_filename(args.city, args.theme)
-        create_poster(args.city, args.country, coords, args.distance, output_file)
+        if not args.coordinates:
+            args.coordinates = get_coordinates(args.city, args.country)
+        output_filename = generate_output_filename(args.city, args.theme)
+        create_poster(args.city, args.country, args.coordinates, args.distance, output_filename)
         
         print("\n" + "=" * 50)
         print("✓ Poster generation complete!")
