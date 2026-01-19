@@ -324,8 +324,7 @@ def create_poster(city, country, point, dist, output_file):
     # \u2022 - Dot
     if args.coordinates:
         ax.text(0.5, 0.5, '+', transform=ax.transAxes,
-                color=THEME.get('marker', THEME.get('text', 'red')),
-                alpha=0.40,
+                color=THEME.get('marker', THEME.get('text', '#ff000080')),
                 ha='center', va='center',
                 fontproperties=font_main, zorder=11)
 
