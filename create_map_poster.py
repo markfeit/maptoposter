@@ -469,7 +469,7 @@ Examples:
     if not args.output:
         args.output = generate_output_filename(args.city, args.theme)
 
-    base_dir = os.path.dirname(args.output)
+    base_dir = os.path.dirname(args.output) or '.'
     if not (os.path.isdir(base_dir) and os.access(base_dir, os.W_OK)):
         print(f"Error: {args.output} would not be writable")
         os.sys.exit(1)
