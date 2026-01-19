@@ -38,8 +38,10 @@ python create_map_poster.py --city <city> --country <country> [options]
 |--------|-------|-------------|---------|
 | `--city` | `-c` | City name | required |
 | `--country` | `-C` | Country name | required |
+| `--coordinates` | `-l` | Coordinates (LAT,LON) | Optional |
 | `--theme` | `-t` | Theme name | feature_based |
 | `--distance` | `-d` | Map radius in meters | 29000 |
+| `--output` | `-o` | Write the map to the specified path | See below. |
 | `--list-themes` | | List all available themes | |
 
 ### Examples
@@ -71,6 +73,10 @@ python create_map_poster.py -c "Mumbai" -C "India" -t contrast_zones -d 18000 # 
 # River cities
 python create_map_poster.py -c "London" -C "UK" -t noir -d 15000              # Thames curves
 python create_map_poster.py -c "Budapest" -C "Hungary" -t copper_patina -d 8000  # Danube split
+
+# Specific Coordinates.  City and country become labels.
+python create_map_poster.py -l "40.82980493213676,-73.92613158837634" -c "Yankee Stadium" -C "New York" -t blueprint -d 1000
+
 
 # List available themes
 python create_map_poster.py --list-themes
@@ -110,7 +116,8 @@ python create_map_poster.py --list-themes
 
 ## Output
 
-Posters are saved to `posters/` directory with format:
+Unless the `--output` switch is present, posters are saved to
+`posters/` directory with format:
 ```
 {city}_{theme}_{YYYYMMDD_HHMMSS}.png
 ```
