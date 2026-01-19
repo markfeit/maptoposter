@@ -297,9 +297,10 @@ def create_poster(city, country, point, dist, output_file):
             color=THEME['text'], ha='center', fontproperties=font_sub, zorder=11)
     
     lat, lon = point
-    coords = f"{lat:.4f}° N / {lon:.4f}° E" if lat >= 0 else f"{abs(lat):.4f}° S / {lon:.4f}° E"
+    coords = f"{lat:.4f}°N / {lon:.4f}°E" if lat >= 0 else f"{abs(lat):.4f}°S / {lon:.4f}°E"
     if lon < 0:
         coords = coords.replace("E", "W")
+    coords = coords.replace('-', '')
     
     ax.text(0.5, 0.07, coords, transform=ax.transAxes,
             color=THEME['text'], alpha=0.7, ha='center', fontproperties=font_coords, zorder=11)
