@@ -422,6 +422,7 @@ Examples:
     parser.add_argument('--coordinates', '-l', type=str, help='Coordinates as "LAT,LON", e.g., "40.712776,-74.005974".')
     parser.add_argument('--theme', '-t', type=str, default='feature_based', help='Theme name (default: feature_based)')
     parser.add_argument('--distance', '-d', type=int, default=29000, help='Map radius in meters (default: 29000)')
+    parser.add_argument('--output', '-o', type=str, help='Path to output file')
     parser.add_argument('--list-themes', action='store_true', help='List all available themes')
     
     args = parser.parse_args()
@@ -463,6 +464,15 @@ Examples:
         print(f"Error: Theme '{args.theme}' not found.")
         print(f"Available themes: {', '.join(available_themes)}")
         os.sys.exit(1)
+
+    # Generate the output file name if not provided and make sure it's writable
+    if not args.output:
+        args.output = generate_output_filename(args.city, args.theme)
+
+    base_dir = os.path.dirname(args.output)
+    if not (os.path.isdir(base_dir) and os.access(base_dir, os.W_OK)):
+        print(f"Error: {args.output} would not be writable")
+        os.sys.exit(1)
     
     print("=" * 50)
     print("City Map Poster Generator")
@@ -475,8 +485,7 @@ Examples:
     try:
         if not args.coordinates:
             args.coordinates = get_coordinates(args.city, args.country)
-        output_filename = generate_output_filename(args.city, args.theme)
-        create_poster(args.city, args.country, args.coordinates, args.distance, output_filename)
+        create_poster(args.city, args.country, args.coordinates, args.distance, args.output)
         
         print("\n" + "=" * 50)
         print("✓ Poster generation complete!")
