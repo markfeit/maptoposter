@@ -76,6 +76,7 @@ def load_theme(theme_name="feature_based"):
             "name": "Feature-Based Shading",
             "bg": "#FFFFFF",
             "text": "#000000",
+            "marker": "#000000",
             "gradient_color": "#FFFFFF",
             "water": "#C0C0C0",
             "parks": "#F0F0F0",
@@ -316,6 +317,16 @@ def create_poster(city, country, point, dist, output_file):
             color=THEME['text'], alpha=0.5, ha='right', va='bottom', 
             fontproperties=font_attr, zorder=11)
 
+    # --- CENTER MARKER (center, if --coordinates provided) ---
+    # Other ideas:
+    # \u2022 - Dot
+    if args.coordinates:
+        ax.text(0.5, 0.5, '+', transform=ax.transAxes,
+                color=THEME.get('marker', THEME.get('text', 'red')),
+                alpha=0.40,
+                ha='center', va='center',
+                fontproperties=font_main, zorder=11)
+
     # 5. Save
     print(f"Saving to {output_file}...")
     plt.savefig(output_file, dpi=300, facecolor=THEME['bg'])
@@ -483,9 +494,8 @@ Examples:
     
     # Get coordinates and generate poster
     try:
-        if not args.coordinates:
-            args.coordinates = get_coordinates(args.city, args.country)
-        create_poster(args.city, args.country, args.coordinates, args.distance, args.output)
+        coordinates = args.coordinates or get_coordinates(args.city, args.country)
+        create_poster(args.city, args.country, coordinates, args.distance, args.output)
         
         print("\n" + "=" * 50)
         print("✓ Poster generation complete!")
