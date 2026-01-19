@@ -286,8 +286,8 @@ def create_poster(city, country, point, dist, output_file):
         font_top = FontProperties(family='monospace', weight='bold', size=40)
         font_sub = FontProperties(family='monospace', weight='normal', size=22)
         font_coords = FontProperties(family='monospace', size=14)
-    
-    spaced_city = "  ".join(list(city.upper()))
+
+    spaced_city = " ".join(list(city.upper()))
 
     # --- BOTTOM TEXT ---
     ax.text(0.5, 0.14, spaced_city, transform=ax.transAxes,
