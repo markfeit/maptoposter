@@ -312,8 +312,10 @@ def create_poster(city, country, point, dist, output_file):
         font_attr = FontProperties(fname=FONTS['light'], size=8)
     else:
         font_attr = FontProperties(family='monospace', size=8)
-    
-    ax.text(0.98, 0.02, "© OpenStreetMap contributors", transform=ax.transAxes,
+
+    ax.text(0.98, 0.02,
+            f'Map data from OpenStreetMap \u2022 {datetime.now().strftime("%Y-%m-%d")}',
+            transform=ax.transAxes,
             color=THEME['text'], alpha=0.5, ha='right', va='bottom', 
             fontproperties=font_attr, zorder=11)
 
